@@ -31,8 +31,8 @@ namespace lofi_backend
             var supabaseKey = builder.Configuration["Supabase:Key"]!;
             var options = new SupabaseOptions
             {
-                AutoRefreshToken = true,
-                AutoConnectRealtime = true
+                AutoRefreshToken = false,
+                AutoConnectRealtime = false
             };
 
             using var httpClient = new HttpClient();
@@ -70,7 +70,7 @@ namespace lofi_backend
                 };
             });
 
-            builder.Services.AddSingleton(provider => 
+            builder.Services.AddScoped(provider =>
                 new Client(supabaseUrl, supabaseKey, options));
 
             // Add services to the container.
