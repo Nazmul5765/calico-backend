@@ -14,6 +14,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Supabase;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace lofi_backend
 {
@@ -28,15 +29,15 @@ namespace lofi_backend
 
             var supabaseUrl = builder.Configuration["Supabase:Url"]!;
             var supabaseKey = builder.Configuration["Supabase:Key"]!;
-            var supabaseJwtSecret = builder.Configuration["Supabase:JwtKey"]!;
-
             var options = new SupabaseOptions
             {
                 AutoRefreshToken = true,
                 AutoConnectRealtime = true
             };
 
-            var supabaseSignatureKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(supabaseJwtSecret));
+            using var httpClient = new HttpClient();
+            var jwksJson = await httpClient.GetStringAsync($"{supabaseUrl}/auth/v1/.well-known/jwks.json");
+            var jwks = new JsonWebKeySet(jwksJson);
             var validIssuers = supabaseUrl + "/auth/v1";
             List<string> validAudiences = ["authenticated"];
 
@@ -47,7 +48,7 @@ namespace lofi_backend
                 o.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = supabaseSignatureKey,
+                    IssuerSigningKeys = jwks.GetSigningKeys(),
                     ValidateIssuer = true,
                     ValidIssuer = validIssuers,
                     ValidateAudience = true,
