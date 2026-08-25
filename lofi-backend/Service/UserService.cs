@@ -7,7 +7,6 @@ namespace lofi_backend.Service
 {
     public interface IUserService
     {
-        public Task<UserData> GetUserAsync(string username, string password);
         public UserData GetUserById(string id);
         public Task<UserData> CreateUser(UserWithPassword user);
         public UserData EditUser(UserData user);
@@ -31,21 +30,6 @@ namespace lofi_backend.Service
         public List<UserData> GetAllUsers()
         {
             return _repository.FetchAllUser();
-        }
-
-
-        public async Task<UserData> GetUserAsync(string username, string password)
-        {
-            try
-            {
-                var userInDb = _repository.FetchUser(username);
-                return userInDb;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error fetching user: {ex.Message}");
-                throw;
-            }
         }
 
         public async Task<UserData> CreateUser(UserWithPassword user)

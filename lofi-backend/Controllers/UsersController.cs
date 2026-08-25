@@ -51,21 +51,23 @@ namespace lofi_backend.Controllers
         }
 
         [Authorize]
+        [Route("me")]
         [HttpGet]
-        public async Task<IActionResult> GetUserAsync(string username, string password)
+        public IActionResult GetUserAsync()
         {
+            var currentUserId = User.FindFirst("sub")?.Value;
+
             try
             {
-                var result = await _service.GetUserAsync(username, password);
+                var result = _service.GetUserById(currentUserId);
                 return Ok(result);
-            }                                              
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return NotFound();
             }
         }
-
 
         [HttpPost]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserWithPassword user)
