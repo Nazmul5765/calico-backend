@@ -1,6 +1,7 @@
 ﻿using lofi_backend.Data_Models;
 using lofi_backend.Models;
 using lofi_backend.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace lofi_backend.Controllers
@@ -16,12 +17,14 @@ namespace lofi_backend.Controllers
             _playlistService = playlistService;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetAllPlaylists()
         {
             return Ok(_playlistService.GetAllPlaylists().ToList());
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetPlaylistById(string id)
         {
@@ -36,8 +39,8 @@ namespace lofi_backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
-        //How will people create playlists? will it be clicking a button or from Postman? 
         public IActionResult CreatePlaylist([FromBody] Playlist playlist)
         {
             try
@@ -52,8 +55,8 @@ namespace lofi_backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut]
-        //How will people edit playlists? will it be clicking a button or from Postman?
         public IActionResult EditPlaylist([FromBody] Playlist playlist)
         {
             try
@@ -67,6 +70,7 @@ namespace lofi_backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult DeletePlaylist(string id)
         {

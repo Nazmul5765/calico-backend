@@ -10,6 +10,7 @@ namespace lofi_backend.Repository
     public interface IUserRepository
     {
         public UserData FetchUser(string username);
+        public UserData FetchUserById(string id);
         public UserData InsertUser(UserData user);
         public UserData UpdateUser(UserData user);
         public UserData DeleteUser(string id);
@@ -28,6 +29,11 @@ namespace lofi_backend.Repository
         {
             if (_db.Users.ToList().IsNullOrEmpty()) throw new Exception("No users found");
             return _db.Users.ToList();
+        }
+
+        public UserData FetchUserById(string id)
+        {
+            return _db.Users.First(u => u.Id == id) ?? throw new Exception("User not found");
         }
 
         public UserData FetchUser(string username)

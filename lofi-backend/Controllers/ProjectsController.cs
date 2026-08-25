@@ -16,6 +16,7 @@ namespace lofi_backend.Controllers
             _projectService = projectService;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetAllProjects()
         {
@@ -29,6 +30,7 @@ namespace lofi_backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetProject(int id)
         {
@@ -43,6 +45,7 @@ namespace lofi_backend.Controllers
             }
 
         }
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateProject(Project project)
@@ -51,6 +54,7 @@ namespace lofi_backend.Controllers
             return Created("", newProject);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProject(int id)
         {
@@ -68,6 +72,7 @@ namespace lofi_backend.Controllers
             return Ok(projectToDelete);
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> EditProject([FromBody] Project project)
         {

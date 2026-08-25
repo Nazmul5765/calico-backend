@@ -52,6 +52,17 @@ namespace lofi_backend.Database
                         Email = "s.nguyen@example.com",
                         DateOfBirth = new DateTime(2000, 9, 5),
                         Gender = Gender.NonBinary
+                    },
+                    new UserData
+                    {
+                        Id = "cdc75697-df68-4110-8e74-b37244ec9c36",
+                        Username = "nazmul5765",
+                        FirstName = "Nazmul",
+                        LastName = "Hussain",
+                        DateOfBirth = new DateTime(1991, 11, 08),
+                        Email = "nazmulhussain@hotmail.co.uk",
+                        Gender = Gender.Male,
+                        IsAdmin = true,
                     }
                 );
 

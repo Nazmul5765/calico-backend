@@ -8,6 +8,7 @@ namespace lofi_backend.Service
     public interface IUserService
     {
         public Task<UserData> GetUserAsync(string username, string password);
+        public UserData GetUserById(string id);
         public Task<UserData> CreateUser(UserWithPassword user);
         public UserData EditUser(UserData user);
         public UserData RemoveUser(string id);
@@ -20,6 +21,11 @@ namespace lofi_backend.Service
         public UserService(IUserRepository repository)
         {
             _repository = repository;
+        }
+        
+        public UserData GetUserById(string id)
+        {
+            return _repository.FetchUserById(id);
         }
 
         public List<UserData> GetAllUsers()

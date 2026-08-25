@@ -2,6 +2,7 @@
 using lofi_backend.Data_Models;
 using lofi_backend.Models;
 using lofi_backend.Service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace lofi_backend.Controllers
 {
@@ -16,6 +17,7 @@ namespace lofi_backend.Controllers
             _service = service;
         }
 
+        [Authorize]
         [HttpGet]
         [Route("all")]
         public IActionResult GetAllMusics()
@@ -32,6 +34,7 @@ namespace lofi_backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetMusicById(int id)
         {
@@ -47,6 +50,7 @@ namespace lofi_backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult CreateMusic([FromBody] Music music)
         {
@@ -62,7 +66,7 @@ namespace lofi_backend.Controllers
             }
         }
 
-
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult RemoveMusic(int id)
         {

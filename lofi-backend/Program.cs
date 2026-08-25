@@ -45,8 +45,10 @@ namespace lofi_backend
 
             builder.Services.AddAuthentication().AddJwtBearer(o =>
             {
+                o.MapInboundClaims = false;
                 o.TokenValidationParameters = new TokenValidationParameters
                 {
+
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKeys = jwks.GetSigningKeys(),
                     ValidateIssuer = true,

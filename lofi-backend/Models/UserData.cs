@@ -30,7 +30,10 @@ namespace lofi_backend.Models
         [Required]
         public DateTime DateOfBirth { get; set; }
         [Required]
-        public Gender Gender { get; set; } 
+        public Gender Gender { get; set; }
+
+        public bool IsAdmin { get; set; } = false;
+
         public List<Playlist> Playlists { get; set; } = new List<Playlist>();
     }
 

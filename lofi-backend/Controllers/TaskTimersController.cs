@@ -1,5 +1,6 @@
 ﻿using lofi_backend.Models;
 using lofi_backend.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace lofi_backend.Controllers
@@ -15,6 +16,7 @@ namespace lofi_backend.Controllers
             _taskTimerService = taskTimerService;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetTimerByTimerId(int id)
         {
@@ -37,6 +39,7 @@ namespace lofi_backend.Controllers
 
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateNewTimer([FromBody]TaskTimer taskTimer)
         {
@@ -51,6 +54,7 @@ namespace lofi_backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> EditTimer([FromBody] TaskTimer timer)
         {
@@ -65,6 +69,7 @@ namespace lofi_backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete]
         public async Task<IActionResult> DeleteTimer(int id)
         {
@@ -85,6 +90,7 @@ namespace lofi_backend.Controllers
             }            
         }
 
+        [Authorize]
         [HttpGet("Projects")]
         
         public async Task<IActionResult> GetTimerByProjectId(int projectId)

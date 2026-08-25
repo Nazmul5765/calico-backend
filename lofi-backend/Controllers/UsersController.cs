@@ -1,6 +1,7 @@
 using lofi_backend.Data_Models;
 using lofi_backend.Models;
 using lofi_backend.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace lofi_backend.Controllers
@@ -16,10 +17,27 @@ namespace lofi_backend.Controllers
             _service = service;
         }
 
+        [Authorize]
         [HttpGet]
         [Route("all")]
         public IActionResult GetAllUsers()
         {
+            var currentUserId = User.FindFirst("sub")?.Value;
+
+            UserData currentUser;
+            try
+            {
+                currentUser = _service.GetUserById(currentUserId);
+            }
+            catch (Exception)
+            {
+                return Forbid();
+            }
+
+            if (!currentUser.IsAdmin)
+            {
+                return Forbid();
+            }
             try
             {
                 var result = _service.GetAllUsers();
@@ -32,6 +50,7 @@ namespace lofi_backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetUserAsync(string username, string password)
         {
@@ -63,11 +82,22 @@ namespace lofi_backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut]
         public IActionResult EditUser([FromBody] UserData user)
         {
+            var currentUserId = User.FindFirst("sub")?.Value;
+
+            if (user.Id != currentUserId)
+            {
+                return Forbid();
+            }
+
             try
             {
+                var existingUser = _service.GetUserById(currentUserId);
+                user.IsAdmin = existingUser.IsAdmin;
+
                 var result = _service.EditUser(user);
                 return Ok(result);
             }
@@ -77,9 +107,27 @@ namespace lofi_backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult RemoveUser(string id)
         {
+            var currentUserId = User.FindFirst("sub")?.Value;
+
+            UserData currentUser;
+            try
+            {
+                currentUser = _service.GetUserById(currentUserId);
+            }
+            catch (Exception)
+            {
+                return Forbid();
+            }
+
+            if (!currentUser.IsAdmin)
+            {
+                return Forbid();
+            }
+
             if (id == "")
             {
                 return BadRequest("User id must be greater than zero.");
