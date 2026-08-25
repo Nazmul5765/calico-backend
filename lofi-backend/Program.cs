@@ -24,7 +24,7 @@ namespace lofi_backend
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Configuration.SetBasePath(AppContext.BaseDirectory);
-            builder.Configuration.AddJsonFile("customsettings.json");
+            builder.Configuration.AddUserSecrets<Program>();
 
             var supabaseUrl = builder.Configuration["Supabase:Url"]!;
             var supabaseKey = builder.Configuration["Supabase:Key"]!;
@@ -58,7 +58,7 @@ namespace lofi_backend
                 {
                     OnMessageReceived = context => 
                     { 
-                        if (context.Request.Cookies.TryGetValue("supabase_jwt", out var token))
+                        if (context.Request.Cookies.TryGetValue("jwt", out var token))
                         {
                             context.Token = token;
                         }

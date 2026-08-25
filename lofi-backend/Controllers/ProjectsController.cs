@@ -1,6 +1,7 @@
 ﻿using lofi_backend.Data_Models;
 using lofi_backend.Models;
 using lofi_backend.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace lofi_backend.Controllers
 {
@@ -42,6 +43,7 @@ namespace lofi_backend.Controllers
             }
 
         }
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateProject(Project project)
         {

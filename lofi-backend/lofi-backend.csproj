@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>lofi_backend</RootNamespace>
+    <UserSecretsId>718784e7-604d-4317-86b3-c61ae16c8c0e</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
