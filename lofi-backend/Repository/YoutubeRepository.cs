@@ -1,15 +1,7 @@
-﻿using System.Collections;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.Json;
-using lofi_backend.Data_Models;
+﻿using System.Text.Json;
 using lofi_backend.Data_Models.Enums;
-using lofi_backend.Database;
 using lofi_backend.Models;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Identity.Client;
-using Microsoft.IdentityModel.Tokens;
 
 namespace lofi_backend.Repository
 {
@@ -25,12 +17,6 @@ namespace lofi_backend.Repository
         private readonly IConfiguration _configuration;
         private readonly IMemoryCache _cache;
 
-
-        public YoutubeRepository(IHttpClientFactory httpClientFactory, IConfiguration configuration)
-        {
-            _httpClientFactory = httpClientFactory;
-            _configuration = configuration;
-        }
 
         public YoutubeRepository(IHttpClientFactory httpClientFactory, IConfiguration configuration, IMemoryCache cache)
         {

@@ -1,11 +1,4 @@
-﻿using lofi_backend.Data_Models;
-using lofi_backend.Models;
-using lofi_backend.Service;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Supabase;
-
+﻿using Microsoft.AspNetCore.Mvc;
 using Supabase.Gotrue;
 
 namespace lofi_backend.Controllers

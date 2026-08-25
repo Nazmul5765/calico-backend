@@ -2,17 +2,11 @@ using lofi_backend.Database;
 using lofi_backend.HealthChecks;
 using lofi_backend.Repository;
 using lofi_backend.Service;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
-using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
-
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Supabase;
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Caching.Memory;
 
