@@ -7,6 +7,7 @@ using lofi_backend.Data_Models.Enums;
 using lofi_backend.Database;
 using lofi_backend.Models;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
 
@@ -18,11 +19,12 @@ namespace lofi_backend.Repository
 
     }
 
-
     public class YoutubeRepository : IYoutubeRepository
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
+        private readonly IMemoryCache _cache;
+
 
         public YoutubeRepository(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
@@ -30,11 +32,25 @@ namespace lofi_backend.Repository
             _configuration = configuration;
         }
 
-
+        public YoutubeRepository(IHttpClientFactory httpClientFactory, IConfiguration configuration, IMemoryCache cache)
+        {
+            _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
+            _cache = cache;
+        }
 
         public async Task<List<Music>> SearchYoutubeAsync(string search)
         {
-            Console.WriteLine("Repository Layer");
+            var cacheKey = $"youtube-search:{search.ToLowerInvariant()}";
+
+            if (_cache.TryGetValue(cacheKey, out List<Music> cachedResults))
+            {
+
+                Console.WriteLine($"Cache HIT for '{search}'");
+                return cachedResults;
+            }
+
+            Console.WriteLine($"Cache MISS for '{search}' — calling YouTube API");
             var apiKey = _configuration["YouTube:ApiKey"];
 
             if (string.IsNullOrEmpty(apiKey))
@@ -82,6 +98,7 @@ namespace lofi_backend.Repository
                     Thumbnail = snippet.GetProperty("thumbnails").GetProperty("default").GetProperty("url").GetString() ?? ""
                 });
             }
+            _cache.Set(cacheKey, musicList, TimeSpan.FromMinutes(15));
             return musicList;
         }
     }
