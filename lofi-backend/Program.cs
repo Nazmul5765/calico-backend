@@ -98,17 +98,18 @@ namespace lofi_backend
 
             builder.Services.AddDbContext<LoFiDbContext>(options =>
             {
-                var _connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
                 if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") is "Development")
                 {
-                    var connection = new SqliteConnection(_connectionString);
+                    var connectionString = builder.Configuration.GetConnectionString("SQLiteConnection");
+                    var connection = new SqliteConnection(connectionString);
                     connection.Open();
                     options.UseSqlite(connection);
                 }
                 else
                 {
-                    Console.WriteLine($"Connection: ${_connectionString}");
-                    options.UseSqlServer(_connectionString);
+                    var connectionString = builder.Configuration.GetConnectionString("SQLServerConnection");
+                    Console.WriteLine($"Connection: ${connectionString}");
+                    options.UseSqlServer(connectionString);
                 }
             });
            
