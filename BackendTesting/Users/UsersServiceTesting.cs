@@ -20,13 +20,13 @@ namespace Testing.Users
         }
 
         [Test]
-        public async Task GetUser_ReturnsUser()
+        public void GetUserById_ReturnsUser()
         {
             // Arrange
             var user = new UserData(id: "1", username: "Test User", firstName: "John", lastName: "Music", email: "email@email.com", dateOfBirth: DateTime.Now, gender: 0);
-            _mockRepo.Setup(repo => repo.FetchUser("1")).Returns(user);
+            _mockRepo.Setup(repo => repo.FetchUserById("1")).Returns(user);
             // Act
-            var result = await _userService.GetUserAsync("1", "");
+            var result = _userService.GetUserById("1");
             // Assert
             result.ShouldBe(user);
         }

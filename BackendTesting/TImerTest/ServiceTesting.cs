@@ -4,7 +4,7 @@ using lofi_backend.Models;
 using Moq;
 using Shouldly;
 
-namespace Testing.TaskTimer;
+namespace Testing.TimerTest;
 
 public class ServiceTesting
 {

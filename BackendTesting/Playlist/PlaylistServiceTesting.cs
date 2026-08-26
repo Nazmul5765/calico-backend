@@ -1,5 +1,4 @@
-﻿using lofi_backend.Data_Models;
-using lofi_backend.Data_Models.Enums;
+﻿using lofi_backend.Data_Models.Enums;
 using lofi_backend.Repository;
 using lofi_backend.Service;
 using Microsoft.AspNetCore.Mvc;
