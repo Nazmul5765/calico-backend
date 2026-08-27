@@ -108,7 +108,6 @@ namespace lofi_backend
                 else
                 {
                     var connectionString = builder.Configuration.GetConnectionString("SQLServerConnection");
-                    Console.WriteLine($"Connection: ${connectionString}");
                     options.UseSqlServer(connectionString);
                 }
             });
