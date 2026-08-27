@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using lofi_backend.Database;
 
@@ -11,9 +12,11 @@ using lofi_backend.Database;
 namespace lofi_backend.Migrations
 {
     [DbContext(typeof(LoFiDbContext))]
-    partial class LoFiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260826233501_RemoveUnusedPlaylistUserRelationship")]
+    partial class RemoveUnusedPlaylistUserRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

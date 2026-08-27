@@ -33,8 +33,6 @@ namespace lofi_backend.Models
         public Gender Gender { get; set; }
 
         public bool IsAdmin { get; set; } = false;
-
-        public List<Playlist> Playlists { get; set; } = new List<Playlist>();
     }
 
     
