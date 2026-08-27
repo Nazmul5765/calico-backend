@@ -52,9 +52,15 @@ namespace lofi_backend.Controllers
 
                 Console.WriteLine(session.AccessToken);
                 Console.WriteLine(session.RefreshToken);
-                
-                Response.Cookies.Append("jwt", session.AccessToken);
-                Response.Cookies.Append("refreshtoken", session.RefreshToken);
+
+                var cookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None
+                };
+                Response.Cookies.Append("jwt", session.AccessToken, cookieOptions);
+                Response.Cookies.Append("refreshtoken", session.RefreshToken, cookieOptions);
                 return Ok(new AuthResponse(session.AccessToken, session.RefreshToken));
             }
             catch (Exception ex)
@@ -79,11 +85,17 @@ namespace lofi_backend.Controllers
                     return BadRequest("Refresh token is missing.");
 
                 var newToken = await _supabaseClient.Auth.RefreshSession();
-                if (newToken?.RefreshToken is null || newToken.AccessToken is null) 
+                if (newToken?.RefreshToken is null || newToken.AccessToken is null)
                     return BadRequest("Failed to refresh token.");
 
-                Response.Cookies.Append("jwt", newToken.AccessToken);
-                Response.Cookies.Append("refreshtoken", newToken.RefreshToken);
+                var cookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None
+                };
+                Response.Cookies.Append("jwt", newToken.AccessToken, cookieOptions);
+                Response.Cookies.Append("refreshtoken", newToken.RefreshToken, cookieOptions);
 
                 return Ok(new AuthResponse(newToken.AccessToken, newToken.RefreshToken));
             }
