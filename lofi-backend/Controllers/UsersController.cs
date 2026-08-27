@@ -68,9 +68,14 @@ namespace lofi_backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserWithPassword user)
         {
+            var currentUserId = User.FindFirst("sub")?.Value;
+            user.UserData.Id = currentUserId;
+            user.UserData.IsAdmin = false;
+
             try
             {
                 var newUser = await _service.CreateUser(user);

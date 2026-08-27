@@ -60,6 +60,7 @@ namespace Testing.UsersControllerTesting
         {
             var expectedUser = new UserData(id: "1", username: "Test User", firstName: "John", lastName: "Music", email: "email@email.com", dateOfBirth: DateTime.Now, gender: 0);
             var userToCreate =new UserWithPassword(expectedUser, "");
+            SetLoggedInUser("1");
             _mockService.Setup(service => service.CreateUser(userToCreate)).ReturnsAsync(expectedUser);
 
             var result = await _userController.CreateUserAsync(userToCreate) as ObjectResult;
@@ -72,6 +73,7 @@ namespace Testing.UsersControllerTesting
         public async Task CreateUser_UserExists()
         {
             var userToCreate =new UserWithPassword(new UserData(id: "1", username: "Test User", firstName: "John", lastName: "Music", email: "email@email.com", dateOfBirth: DateTime.Now, gender: 0), "");
+            SetLoggedInUser("1");
             _mockService.Setup(service => service.CreateUser(userToCreate)).ThrowsAsync(new Exception());
 
             var result = await _userController.CreateUserAsync(userToCreate) as ObjectResult;
